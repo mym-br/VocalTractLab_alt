@@ -1,0 +1,274 @@
+project(VocalTractLab)
+cmake_minimum_required(VERSION 2.8)
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra")
+endif()
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(OPENAL REQUIRED IMPORTED_TARGET openal)
+
+add_compile_definitions(HAVE_OPENAL)
+
+find_package(wxWidgets 3.1 REQUIRED COMPONENTS gl core base)
+include(${wxWidgets_USE_FILE})
+
+include_directories(
+    API/Sources
+    GUI/Backend/Sources
+    GUI/Frontend/Sources
+)
+
+set(API_FILES
+    API/Sources/AnatomyParams.cpp
+    API/Sources/AnatomyParams.h
+    API/Sources/AudioFile.h
+    API/Sources/Constants.h
+    API/Sources/Dsp.cpp
+    API/Sources/Dsp.h
+    API/Sources/F0EstimatorYin.cpp
+    API/Sources/F0EstimatorYin.h
+    API/Sources/GeometricGlottis.cpp
+    API/Sources/GeometricGlottis.h
+    API/Sources/Geometry.cpp
+    API/Sources/Geometry.h
+    API/Sources/GesturalScore.cpp
+    API/Sources/GesturalScore.h
+    API/Sources/Glottis.cpp
+    API/Sources/Glottis.h
+    API/Sources/IirFilter.cpp
+    API/Sources/IirFilter.h
+    API/Sources/ImpulseExcitation.cpp
+    API/Sources/ImpulseExcitation.h
+    API/Sources/LfPulse.cpp
+    API/Sources/LfPulse.h
+    API/Sources/Matrix2x2.cpp
+    API/Sources/Matrix2x2.h
+    API/Sources/PoleZeroPlan.cpp
+    API/Sources/PoleZeroPlan.h
+    API/Sources/Sampa.cpp
+    API/Sources/Sampa.h
+    API/Sources/SegmentSequence.cpp
+    API/Sources/SegmentSequence.h
+    API/Sources/Signal.cpp
+    API/Sources/Signal.h
+    API/Sources/SoundLib.cpp
+    API/Sources/SoundLib.h
+    API/Sources/Splines.cpp
+    API/Sources/Splines.h
+    API/Sources/StaticPhone.cpp
+    API/Sources/StaticPhone.h
+    API/Sources/Surface.cpp
+    API/Sources/Surface.h
+    API/Sources/Synthesizer.cpp
+    API/Sources/Synthesizer.h
+    API/Sources/TdsModel.cpp
+    API/Sources/TdsModel.h
+    API/Sources/TimeFunction.cpp
+    API/Sources/TimeFunction.h
+    API/Sources/TlModel.cpp
+    API/Sources/TlModel.h
+    API/Sources/TriangularGlottis.cpp
+    API/Sources/TriangularGlottis.h
+    API/Sources/Tube.cpp
+    API/Sources/Tube.h
+    API/Sources/TubeSequence.h
+    API/Sources/TwoMassModel.cpp
+    API/Sources/TwoMassModel.h
+    API/Sources/VocalTract.cpp
+    API/Sources/VocalTract.h
+    API/Sources/VocalTractLabApi.cpp
+    API/Sources/VocalTractLabApi.h
+    API/Sources/VoiceQualityEstimator.cpp
+    API/Sources/VoiceQualityEstimator.h
+    API/Sources/VowelLf.cpp
+    API/Sources/VowelLf.h
+    API/Sources/XmlHelper.cpp
+    API/Sources/XmlHelper.h
+    API/Sources/XmlNode.cpp
+    API/Sources/XmlNode.h
+)
+
+set(BACKEND_FILES
+    GUI/Sources/Backend/AnatomyParams.cpp
+    GUI/Sources/Backend/AnatomyParams.h
+    GUI/Sources/Backend/AudioFile.h
+    GUI/Sources/Backend/Constants.h
+    GUI/Sources/Backend/Dsp.cpp
+    GUI/Sources/Backend/Dsp.h
+    GUI/Sources/Backend/F0EstimatorYin.cpp
+    GUI/Sources/Backend/F0EstimatorYin.h
+    GUI/Sources/Backend/GeometricGlottis.cpp
+    GUI/Sources/Backend/GeometricGlottis.h
+    GUI/Sources/Backend/Geometry.cpp
+    GUI/Sources/Backend/Geometry.h
+    GUI/Sources/Backend/GesturalScore.cpp
+    GUI/Sources/Backend/GesturalScore.h
+    GUI/Sources/Backend/Glottis.cpp
+    GUI/Sources/Backend/Glottis.h
+    GUI/Sources/Backend/IirFilter.cpp
+    GUI/Sources/Backend/IirFilter.h
+    GUI/Sources/Backend/ImpulseExcitation.cpp
+    GUI/Sources/Backend/ImpulseExcitation.h
+    GUI/Sources/Backend/LfPulse.cpp
+    GUI/Sources/Backend/LfPulse.h
+    GUI/Sources/Backend/Matrix2x2.cpp
+    GUI/Sources/Backend/Matrix2x2.h
+    GUI/Sources/Backend/PoleZeroPlan.cpp
+    GUI/Sources/Backend/PoleZeroPlan.h
+    GUI/Sources/Backend/Sampa.cpp
+    GUI/Sources/Backend/Sampa.h
+    GUI/Sources/Backend/SegmentSequence.cpp
+    GUI/Sources/Backend/SegmentSequence.h
+    GUI/Sources/Backend/Signal.cpp
+    GUI/Sources/Backend/Signal.h
+    GUI/Sources/Backend/SoundLib.cpp
+    GUI/Sources/Backend/SoundLib.h
+    GUI/Sources/Backend/Splines.cpp
+    GUI/Sources/Backend/Splines.h
+    GUI/Sources/Backend/StaticPhone.cpp
+    GUI/Sources/Backend/StaticPhone.h
+    GUI/Sources/Backend/Surface.cpp
+    GUI/Sources/Backend/Surface.h
+    GUI/Sources/Backend/Synthesizer.cpp
+    GUI/Sources/Backend/Synthesizer.h
+    GUI/Sources/Backend/TdsModel.cpp
+    GUI/Sources/Backend/TdsModel.h
+    GUI/Sources/Backend/TimeFunction.cpp
+    GUI/Sources/Backend/TimeFunction.h
+    GUI/Sources/Backend/TlModel.cpp
+    GUI/Sources/Backend/TlModel.h
+    GUI/Sources/Backend/TriangularGlottis.cpp
+    GUI/Sources/Backend/TriangularGlottis.h
+    GUI/Sources/Backend/Tube.cpp
+    GUI/Sources/Backend/Tube.h
+    GUI/Sources/Backend/TubeSequence.h
+    GUI/Sources/Backend/TwoMassModel.cpp
+    GUI/Sources/Backend/TwoMassModel.h
+    GUI/Sources/Backend/VocalTract.cpp
+    GUI/Sources/Backend/VocalTract.h
+    GUI/Sources/Backend/VocalTractLabApi.cpp
+    GUI/Sources/Backend/VocalTractLabApi.h
+    GUI/Sources/Backend/VoiceQualityEstimator.cpp
+    GUI/Sources/Backend/VoiceQualityEstimator.h
+    GUI/Sources/Backend/VowelLf.cpp
+    GUI/Sources/Backend/VowelLf.h
+    GUI/Sources/Backend/XmlHelper.cpp
+    GUI/Sources/Backend/XmlHelper.h
+    GUI/Sources/Backend/XmlNode.cpp
+    GUI/Sources/Backend/XmlNode.h
+)
+
+set(FRONTEND_FILES
+    GUI/Sources/Frontend/AnalysisResultsDialog.cpp
+    GUI/Sources/Frontend/AnalysisResultsDialog.h
+    GUI/Sources/Frontend/AnalysisSettingsDialog.cpp
+    GUI/Sources/Frontend/AnalysisSettingsDialog.h
+    GUI/Sources/Frontend/AnatomyParamsDialog.cpp
+    GUI/Sources/Frontend/AnatomyParamsDialog.h
+    GUI/Sources/Frontend/AnnotationDialog.cpp
+    GUI/Sources/Frontend/AnnotationDialog.h
+    GUI/Sources/Frontend/Application.cpp
+    GUI/Sources/Frontend/Application.h
+    GUI/Sources/Frontend/AreaFunctionPicture.cpp
+    GUI/Sources/Frontend/AreaFunctionPicture.h
+    GUI/Sources/Frontend/BasicPicture.cpp
+    GUI/Sources/Frontend/BasicPicture.h
+    GUI/Sources/Frontend/ColorScale.cpp
+    GUI/Sources/Frontend/ColorScale.h
+    GUI/Sources/Frontend/CrossSectionPicture.cpp
+    GUI/Sources/Frontend/CrossSectionPicture.h
+    GUI/Sources/Frontend/Data.cpp
+    GUI/Sources/Frontend/Data.h
+    GUI/Sources/Frontend/EmaConfigDialog.cpp
+    GUI/Sources/Frontend/EmaConfigDialog.h
+    GUI/Sources/Frontend/FdsOptionsDialog.cpp
+    GUI/Sources/Frontend/FdsOptionsDialog.h
+    GUI/Sources/Frontend/FormantOptimizationDialog.cpp
+    GUI/Sources/Frontend/FormantOptimizationDialog.h
+    GUI/Sources/Frontend/GesturalScorePage.cpp
+    GUI/Sources/Frontend/GesturalScorePage.h
+    GUI/Sources/Frontend/GesturalScorePicture.cpp
+    GUI/Sources/Frontend/GesturalScorePicture.h
+    GUI/Sources/Frontend/GlottisDialog.cpp
+    GUI/Sources/Frontend/GlottisDialog.h
+    GUI/Sources/Frontend/GlottisPanel.cpp
+    GUI/Sources/Frontend/GlottisPanel.h
+    GUI/Sources/Frontend/GlottisPicture.cpp
+    GUI/Sources/Frontend/GlottisPicture.h
+    GUI/Sources/Frontend/Graph.cpp
+    GUI/Sources/Frontend/Graph.h
+    GUI/Sources/Frontend/IconsXpm.h
+    GUI/Sources/Frontend/LfPulseDialog.cpp
+    GUI/Sources/Frontend/LfPulseDialog.h
+    GUI/Sources/Frontend/LfPulsePicture.cpp
+    GUI/Sources/Frontend/LfPulsePicture.h
+    GUI/Sources/Frontend/MainWindow.cpp
+    GUI/Sources/Frontend/MainWindow.h
+    GUI/Sources/Frontend/PhoneticParamsDialog.cpp
+    GUI/Sources/Frontend/PhoneticParamsDialog.h
+    GUI/Sources/Frontend/PoleZeroDialog.cpp
+    GUI/Sources/Frontend/PoleZeroDialog.h
+    GUI/Sources/Frontend/PoleZeroPlot.cpp
+    GUI/Sources/Frontend/PoleZeroPlot.h
+    GUI/Sources/Frontend/SignalComparisonPicture.cpp
+    GUI/Sources/Frontend/SignalComparisonPicture.h
+    GUI/Sources/Frontend/SignalPage.cpp
+    GUI/Sources/Frontend/SignalPage.h
+    GUI/Sources/Frontend/SignalPicture.cpp
+    GUI/Sources/Frontend/SignalPicture.h
+    GUI/Sources/Frontend/SilentMessageBox.cpp
+    GUI/Sources/Frontend/SilentMessageBox.h
+    GUI/Sources/Frontend/SimpleSpectrumPicture.cpp
+    GUI/Sources/Frontend/SimpleSpectrumPicture.h
+    GUI/Sources/Frontend/SpectrogramPicture.cpp
+    GUI/Sources/Frontend/SpectrogramPicture.h
+    GUI/Sources/Frontend/SpectrogramPlot.cpp
+    GUI/Sources/Frontend/SpectrogramPlot.h
+    GUI/Sources/Frontend/SpectrumOptionsDialog.cpp
+    GUI/Sources/Frontend/SpectrumOptionsDialog.h
+    GUI/Sources/Frontend/SpectrumPicture.cpp
+    GUI/Sources/Frontend/SpectrumPicture.h
+    GUI/Sources/Frontend/SynthesisThread.cpp
+    GUI/Sources/Frontend/SynthesisThread.h
+    GUI/Sources/Frontend/TdsOptionsDialog.cpp
+    GUI/Sources/Frontend/TdsOptionsDialog.h
+    GUI/Sources/Frontend/TdsPage.cpp
+    GUI/Sources/Frontend/TdsPage.h
+    GUI/Sources/Frontend/TdsSpatialSignalPicture.cpp
+    GUI/Sources/Frontend/TdsSpatialSignalPicture.h
+    GUI/Sources/Frontend/TdsTimeSignalPicture.cpp
+    GUI/Sources/Frontend/TdsTimeSignalPicture.h
+    GUI/Sources/Frontend/TdsTubePicture.cpp
+    GUI/Sources/Frontend/TdsTubePicture.h
+    GUI/Sources/Frontend/TimeAxisPicture.cpp
+    GUI/Sources/Frontend/TimeAxisPicture.h
+    GUI/Sources/Frontend/TransitionDialog.cpp
+    GUI/Sources/Frontend/TransitionDialog.h
+    GUI/Sources/Frontend/VocalTractDialog.cpp
+    GUI/Sources/Frontend/VocalTractDialog.h
+    GUI/Sources/Frontend/VocalTractPage.cpp
+    GUI/Sources/Frontend/VocalTractPage.h
+    GUI/Sources/Frontend/VocalTractPicture.cpp
+    GUI/Sources/Frontend/VocalTractPicture.h
+    GUI/Sources/Frontend/VocalTractShapesDialog.cpp
+    GUI/Sources/Frontend/VocalTractShapesDialog.h
+)
+
+add_library(VocalTractLabApi SHARED ${API_FILES})
+target_link_libraries(VocalTractLabApi
+    PkgConfig::OPENAL
+)
+
+add_library(VTLBackend STATIC ${BACKEND_FILES})
+
+add_executable(VocalTractLab2
+    ${FRONTEND_FILES}
+)
+target_link_libraries(VocalTractLab2
+    VTLBackend
+    ${wxWidgets_LIBRARIES}
+    GLU
+    GL
+    PkgConfig::OPENAL
+)
