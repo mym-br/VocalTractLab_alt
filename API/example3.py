@@ -29,7 +29,7 @@ except ImportError:
 if sys.platform == 'win32':
     VTL = ctypes.cdll.LoadLibrary('./VocalTractLabApi.dll')
 else:
-    VTL = ctypes.cdll.LoadLibrary('./VocalTractLabApi.so')
+    VTL = ctypes.cdll.LoadLibrary('./libVocalTractLabApi.so')
 
 
 # get version / compile date

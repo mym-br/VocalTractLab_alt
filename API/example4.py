@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #Test synthBlock function with Python, modified by Anqi Xu (a.xu.17@ucl.ac.uk) 10/03/2020
 
 import os, sys, ctypes #neccessary packages, no need to install
@@ -5,7 +6,10 @@ import numpy as np, matplotlib.pyplot as plt
 from scipy.io import wavfile
 #Initilization
 #Load VocalTractLab library
-VTL = ctypes.cdll.LoadLibrary('./VocalTractLabApi.dll')
+if sys.platform == 'win32':
+    VTL = ctypes.cdll.LoadLibrary('./VocalTractLabApi.dll')
+else:
+    VTL = ctypes.cdll.LoadLibrary('./libVocalTractLabApi.so')
 #Get version and compile date
 version = ctypes.c_char_p(b'                                ')
 VTL.vtlGetVersion(version)
