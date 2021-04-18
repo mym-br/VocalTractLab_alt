@@ -25,6 +25,7 @@
 
 #include <cmath>
 #include <string>
+#include <random>
 
 #include "Dsp.h"
 #include "Geometry.h"
@@ -305,6 +306,7 @@ private:
   double teethPosition; ///< Position of the teeth (from the glottis)
   // Elevation of the tongue tip side (corresponding to TS3 of the vocal tract model)
   double tongueTipSideElevation;
+  std::mt19937 randomNumberGenerator;
 
   // ************************************************************************
   // Private functions.

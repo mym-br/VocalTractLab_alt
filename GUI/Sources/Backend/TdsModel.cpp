@@ -25,7 +25,7 @@
 #include <cstdlib>
 #include <limits>
 #include <iostream>
-
+#include <random>
 
 // For theta = 0.505, the TDS bandwidths are about the same as those
 // of the FDS for frequencies up to 5 kHz. Above 5 kHz, the TDS resonance
@@ -398,7 +398,7 @@ void TdsModel::resetMotion()
   // so that the noise in every synthesis is exactly the same.
   // ****************************************************************
 
-  srand(10);
+  randomNumberGenerator.seed(10);
 
   // ****************************************************************
   // The tube sections.
@@ -1861,15 +1861,16 @@ void TdsModel::calcNoiseSample(NoiseSource *s, double ampThreshold)
   // do the recursive filtering.
   // ****************************************************************
 
-  // inputSample is a random number with the standard deviation sqrt(12)
-  double inputSample = 
-    rand() + rand() + rand() + rand() + rand() + rand() +
-    rand() + rand() + rand() + rand() + rand() + rand();
-
-  inputSample /= (double)RAND_MAX;
-  inputSample -= 6.0;
-  inputSample /= sqrt(12.0);    // Divide by the standard deviation of the above sum
-
+  // inputSample is a random number with the standard deviation
+  // 1/sqrt(12) and range limited to [-1.0, 1.0]
+  normal_distribution<double> normalDistribution(0.0, 1.0 / sqrt(12.0));
+  double inputSample = 0.0;
+  do 
+  {
+    inputSample = normalDistribution(randomNumberGenerator);
+  } 
+  while ((inputSample < -1.0) || (inputSample > 1.0));
+  
   s->inputBuffer[position & NOISE_BUFFER_MASK] = inputSample;
   double sum = filter.a[0] * inputSample;
   int k;

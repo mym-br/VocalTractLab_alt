@@ -3493,7 +3493,12 @@ void Data::calcTriangularGlottisF0Params()
   // Keep in mind the control parameters for F0 and pressure.
   // ****************************************************************
 
-  g->storeControlParams();
+  double storedControlParams[Glottis::MAX_CONTROL_PARAMS];
+  for (i = 0; i < (int)g->controlParam.size(); i++)
+  {
+    storedControlParams[i] = g->controlParam[i].x;
+  }
+
 
   // ****************************************************************
   // Get the produced F0 for Q=1 and P=800 Pa.
@@ -3624,7 +3629,10 @@ void Data::calcTriangularGlottisF0Params()
   // Reset the original parameter values for F0 and pressure.
   // ****************************************************************
 
-  g->restoreControlParams();
+  for (i = 0; i < (int)g->controlParam.size(); i++)
+  {
+    g->controlParam[i].x = storedControlParams[i];
+  }
 }
 
 
