@@ -24,7 +24,7 @@ Building
 mkdir build
 cd build
 cmake -D CMAKE_BUILD_TYPE=Release ..
-make
+cmake --build .
 ```
 
 If CMake can't find wxWidgets, set the environment variable WX_CONFIG with
