@@ -6,6 +6,11 @@ This is an __unofficial__ [VocalTractLab] repository, for building on Linux+GNU.
 
 [VocalTractLab]: https://www.vocaltractlab.de/
 
+The __official__ repositories are [VocalTractLab GUI] and [VocalTractLab Backend].
+
+[VocalTractLab GUI]: https://github.com/TUD-STKS/VocalTractLab-dev
+[VocalTractLab Backend]: https://github.com/TUD-STKS/VocalTractLabBackend-dev
+
 Requirements
 ------------
 
